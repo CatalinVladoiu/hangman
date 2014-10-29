@@ -37,10 +37,26 @@ public class GameRepositoryImpl implements GameRepository {
     @Override
     public Game saveOrUpdate(Game game) throws DataAccessException {
         if (game.getId() != null) {
-            return this.entityManager.merge(game);
+            return entityManager.merge(game);
         }
 
-        this.entityManager.persist(game);
+        entityManager.persist(game);
         return game;
+    }
+
+    @Override
+    public Game getByUserId(int userId) throws DataAccessException {
+        //TODO Have to look more into this do to stupid error
+        /*String hql = String.format("SELECT Game WHERE user_id = %s", userId);
+        TypedQuery<Game> query = entityManager.createQuery(hql, Game.class);
+        query.setParameter("user_id", userId);
+        return query.getSingleResult();*/
+        List<Game> games = getAll();
+        for (Game g : games){
+            if (g.getUser().getId() == userId) {
+                return g;
+            }
+        }
+        return null;
     }
 }

@@ -10,16 +10,11 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <style>
         body { background-color: #eee; font: helvetica; }
-        #container { width: 500px; background-color: #fff; margin: 30px auto; padding: 30px; border-radius: 5px; box-shadow: 5px; }
-        .green { font-weight: bold; color: green; }
-        .message { margin-bottom: 10px; }
-        label { width:70px; display:inline-block;}
-        .hide { display: none; }
-        .error { color: red; font-size: 0.8em; }
+        .container { width: 500px; background-color: #fff; margin: 30px auto; padding: 30px; border-radius: 5px; box-shadow: 5px; }
     </style>
 </head>
 <body>
-        <div id="container">
+        <div id="container" class="container">
             <ul>
                 <li>
                     Number of allowed attempts: <span id="maxAttemptsField"><c:out value="${game.maxAttempts}" /></span>
@@ -52,22 +47,26 @@
                 </li>
             </ul>
         </div>
-        <div id="guessLetterSection">
-            <form id="newGuess">
-                <input id="gameId" name="gameId" type="hidden" value="${game.gameId}"/>
+        <c:if test="${not game.gameLost}">
+            <div id="guessLetterSection" class="container">
+                <form id="newGuess">
+                    <input id="gameId" name="gameId" type="hidden" value="${game.gameId}"/>
 
-                <label for="letter">Guess letter: </label>
-                <input id="letterInput" type="text" name="letter" id="letter" />
-                <br/>
+                    <label for="letter">Guess letter: </label>
+                    <input id="letterInput" type="text" name="letter" id="letter" />
+                    <br/>
 
-                <input type="submit" value="Submit Guess" /><br/>
-            </form>
-        </div>
-        <ul>
+                    <input type="submit" value="Submit Guess" /><br/>
+                </form>
+            </div>
+        </c:if>
+        <%--
+        <ul class="container">
             <li>
-                <a href="/hangman">Back to home page.</a>
+                <a href="hangman/<c:out value="${userId}"/>">Back to home page.</a>
             </li>
         </ul>
+        --%>
 
         <script type="text/javascript">
             $(document).ready(function() {
@@ -90,7 +89,6 @@
                     });
                     e.preventDefault(); // prevent actual form submit and page reload
                 });
-
             });
         </script>
 </body>

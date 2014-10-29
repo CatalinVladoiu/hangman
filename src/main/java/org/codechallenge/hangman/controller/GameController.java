@@ -25,31 +25,26 @@ public class GameController {
     @Autowired
     private GameService gameService;
 
-    @RequestMapping(value = UrlMapping.START_GAME, method = RequestMethod.GET)
-    public String startGame(ModelMap model) {
-        Game game = gameService.createNewGame();
+    @RequestMapping(value = {UrlMapping.START_GAME, UrlMapping.START_GAME_WITH_USER}, method = RequestMethod.GET)
+    public String startGame(@PathVariable int userId, ModelMap model) {
+        Game game = gameService.createNewGame(userId);
         model.addAttribute("game", createResponse(game));
         return "game";
     }
 
-/*    @RequestMapping(value = UrlMapping.START_GAME, method = RequestMethod.GET)
-    public
-    @ResponseBody
-    Game newGame() {
-        Game newGame = gameService.createNewGame();
-        return newGame;
-    }*/
-
-    @RequestMapping(value = UrlMapping.LIST_GAMES, method = RequestMethod.GET)
-    public String listGames(ModelMap model) {
-        List<Game> games = gameService.getAll();
-        model.addAttribute("games", games);
-        return "listGames";
+    @RequestMapping(value = UrlMapping.RESUME_GAME, method = RequestMethod.GET)
+    public String resumeGame(@PathVariable int userId, ModelMap model) {
+        Game game = gameService.getByUserId(userId);
+        //if the game is null means that the user has not played any game before
+        if (null == game){
+            game = gameService.createNewGame(userId);
+        }
+        model.addAttribute("game", createResponse(game));
+        return "game";
     }
 
     @RequestMapping(value = UrlMapping.NEXT_MOVE, method = RequestMethod.POST)
-    public @ResponseBody GameResponse doMove(@RequestParam("gameId") int gameId,
-                         @RequestParam("letter") String letter) {
+    public @ResponseBody GameResponse doMove(@RequestParam("gameId") int gameId, @RequestParam("letter") String letter) {
         Game game = gameService.getById(gameId);
         addGameAttempt(letter, game);
         updateGameStatus(game);
@@ -58,6 +53,13 @@ public class GameController {
         gameService.save(game);
 
         return createResponse(game);
+    }
+
+    @RequestMapping(value = UrlMapping.LIST_GAMES, method = RequestMethod.GET)
+    public String listGames(ModelMap model) {
+        List<Game> games = gameService.getAll();
+        model.addAttribute("games", games);
+        return "listGames";
     }
 
     /**
@@ -69,6 +71,7 @@ public class GameController {
     private GameResponse createResponse(Game game) {
         GameResponse gameResponse = new GameResponse();
         gameResponse.setGameId(game.getId());
+        gameResponse.setUserId(game.getUser().getId());
         gameResponse.setMaxAttempts(game.getMaxAttempts());
         gameResponse.setDisplayPhrase(getDisplayPhrase(game));
         gameResponse.setCorrectAttempts(fillAttempts(game.getCorrectAttempts()));

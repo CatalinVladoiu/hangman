@@ -30,6 +30,10 @@ public class Game extends BaseEntity<Integer> {
     @JoinColumn(name = "syllabus_id")
     private Syllabus syllabus;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     //TODO Mode this to a configuration file outside the .war
     @Column(name = "maxAttempts", columnDefinition = "default 6")
     private Integer maxAttempts;
@@ -74,6 +78,14 @@ public class Game extends BaseEntity<Integer> {
         this.maxAttempts = maxAttempts;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void addAttempt(Attempt attempt) {
         if (attempt.isGuessed()) {
             addCorrectAttempt(attempt);
@@ -110,8 +122,8 @@ public class Game extends BaseEntity<Integer> {
     }
 
     public boolean isLost() {
-        if (null != correctAttempts) {
-            return failedAttempts.size() == maxAttempts;
+        if (null != failedAttempts) {
+            return failedAttempts.size() >= maxAttempts;
         }
         return Boolean.FALSE;
     }

@@ -28,7 +28,7 @@ public class SyllabusServiceImplIntegrationTest {
     @Test
     public void getAll() {
         List<Syllabus> syllabuses = syllabusService.getAll();
-        assertEquals(3, syllabuses.size());
+        assertEquals(5, syllabuses.size());
     }
 
     @Test

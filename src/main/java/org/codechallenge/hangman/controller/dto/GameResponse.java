@@ -8,6 +8,7 @@ import java.util.List;
 public class GameResponse {
 
     private Integer gameId;
+    private Integer userId;
     private Integer maxAttempts;
     private List<String> displayPhrase;
     private List<String> correctAttempts;
@@ -21,6 +22,14 @@ public class GameResponse {
 
     public void setGameId(Integer gameId) {
         this.gameId = gameId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getMaxAttempts() {

@@ -7,11 +7,6 @@
         <style>
             body { background-color: #eee; font: helvetica; }
             #container { width: 500px; background-color: #fff; margin: 30px auto; padding: 30px; border-radius: 5px; box-shadow: 5px; }
-            .green { font-weight: bold; color: green; }
-            .message { margin-bottom: 10px; }
-            label { width:70px; display:inline-block;}
-            .hide { display: none; }
-            .error { color: red; font-size: 0.8em; }
         </style>
     </head>
 
@@ -19,15 +14,17 @@
         <div id="container">
             <ul>
                 <c:forEach items="${games}" var="game">
-                    <li>Game status: <c:out value="${game.gameStatus}" />; Word which had to be guessed: <c:out value="${game.syllabus.phrase}"/>
+                    <li>Game status: <c:out value="${game.gameStatus}" />; Word which had to be guessed: <c:out value="${game.syllabus.phrase}"/></li>
                 </c:forEach>
             </ul>
 
+            <%--
             <ul>
                 <li>
-                    <a href="/hangman">Back to home page.</a>
+                    <a href="/<c:out value="${userId}"/>">Back to home page.</a>
                 </li>
             </ul>
+            --%>
         </div>
     </body>
 </html>

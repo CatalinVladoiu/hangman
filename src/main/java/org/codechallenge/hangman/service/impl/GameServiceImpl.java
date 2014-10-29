@@ -2,8 +2,10 @@ package org.codechallenge.hangman.service.impl;
 
 import org.codechallenge.hangman.model.Game;
 import org.codechallenge.hangman.model.GameStatus;
+import org.codechallenge.hangman.model.User;
 import org.codechallenge.hangman.repository.GameRepository;
 import org.codechallenge.hangman.repository.SyllabusRepository;
+import org.codechallenge.hangman.repository.UserRepository;
 import org.codechallenge.hangman.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -25,6 +27,9 @@ public class GameServiceImpl implements GameService {
     @Autowired
     private SyllabusRepository syllabusRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<Game> getAll() throws DataAccessException {
         return gameRepository.getAll();
@@ -38,8 +43,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional(readOnly = false)
-    public Game createNewGame() throws DataAccessException {
+    public Game createNewGame(int userId) throws DataAccessException {
         Game newGame = new Game();
+        newGame.setUser(userRepository.getById(userId));
         newGame.setSyllabus(syllabusRepository.getRandomSyllabus());
         newGame.setGameStatus(GameStatus.NEW);
         newGame.setMaxAttempts(6);
@@ -50,5 +56,10 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game getById(int id) throws DataAccessException {
         return gameRepository.getById(id);
+    }
+
+    @Override
+    public Game getByUserId(int userId) throws DataAccessException {
+        return gameRepository.getByUserId(userId);
     }
 }

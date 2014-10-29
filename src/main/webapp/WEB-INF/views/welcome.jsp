@@ -10,29 +10,22 @@
     <style>
         body { background-color: #eee; font: helvetica; }
         #container { width: 500px; background-color: #fff; margin: 30px auto; padding: 30px; border-radius: 5px; box-shadow: 5px; }
-        .green { font-weight: bold; color: green; }
-        .message { margin-bottom: 10px; }
-        label { width:70px; display:inline-block;}
-        .hide { display: none; }
-        .error { color: red; font-size: 0.8em; }
     </style>
 </head>
 <body>
+    <div id="container">
+        <h1>Hangman</h1>
 
-<div id="container">
+        <p> - The app should use jQuery and Ajax queries for interaction.</p>
+        <p> - The app should keep the current game state persistent across server and browser re-starts.</p>
+        <p> - The app should be built with "Ant/Maven" and produce a war file that can be deployed in a Tomcat instance.</p>
+        <p> - The app should have a "Management page" that shows a summary of the state of all games that are currently being played.</p>
 
-    <h1>Hangman</h1>
-    <p> - The app should use jQuery and Ajax queries for interaction.
-        - The app should keep the current game state persistent across server and browser re-starts.
-        - The app should be built with "Ant/Maven" and produce a war file that can be deployed in a Tomcat instance.
-        - The app should have a "Management page" that shows a summary of the state of all games that are currently being played.
-    </p>
+        <a href="startGame/<c:out value="${userId}"/>">New Games</a>
 
-    <a href="startGame">New Games</a>
+        <a href="resumeGame/<c:out value="${userId}"/>">Resume games</a>
 
-    <a href="resumeGame">Resume games</a>
-
-    <a href="listGames">Show All Games</a>
-</div>
+        <a href="listGames/<c:out value="${userId}"/>">Show All Games</a>
+    </div>
 </body>
 </html>

@@ -47,6 +47,12 @@ public class GameServiceImplIntegrationTest {
     }
 
     @Test
+    public void getByUserId() {
+        Game game = gameService.getByUserId(1);
+        assertEquals("NEW", game.getGameStatus().toString());
+    }
+
+    @Test
     public void saveGame() {
         //check how many games are in db before adding a new one
         assertEquals(1, gameService.getAll().size());

@@ -25,7 +25,9 @@ public interface GameService {
      */
     Game save(Game game) throws DataAccessException;
 
-    Game createNewGame() throws DataAccessException;
+    Game createNewGame(int userId) throws DataAccessException;
 
     Game getById(int id) throws DataAccessException;
+
+    Game getByUserId(int userId) throws DataAccessException;
 }

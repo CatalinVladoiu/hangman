@@ -26,4 +26,6 @@ public interface GameRepository {
     Game saveOrUpdate(Game game) throws DataAccessException;
 
     Game getById(int id) throws DataAccessException;
+
+    Game getByUserId(int userId) throws DataAccessException;
 }
