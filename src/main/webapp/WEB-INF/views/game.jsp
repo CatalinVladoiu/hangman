@@ -82,7 +82,7 @@
                         $('#letterInput').val('');
 
                         if(gameResponse.gameWon){
-                            $('#guessLetterSection').text('Congratulations, you have wan the game!');
+                            $('#guessLetterSection').text('Congratulations, you have won the game!');
                         } else if (gameResponse.gameLost) {
                             $('#guessLetterSection').text('Game over, please try again!');
                         }
